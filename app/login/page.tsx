@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import createUser from "@/lib/actions/createUser";
+import userLogin from "@/lib/actions/userLogin";
 import Link from "next/link";
 
 const LoginPage = () => {
@@ -10,42 +10,25 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [error, setError] = useState("");
 
-  const login = async (email: string, password: string) => {
-    console.log("3");
-    // const session = await account.createEmailPasswordSession(email, password);
-    // setLoggedInUser(await account.get());
-  };
-
   const handleOnClick = async () => {
-    console.log("1");
-    const result = await createUser({
-      email,
-      password,
-      name,
-      confirmPassword: password,
-    });
-
-    if (result.error) {
-      return setError(result.error);
-    }
+    const result = await userLogin(email, password);
 
     if (result.success) {
-      console.log("2");
       router.push("/home");
-      return;
     }
-    // await account.create(ID.unique(), email, password, name);
-    login(email, password);
+
+    if (result.error) {
+      setError(result.error);
+    }
   };
 
   return (
     <div className="flex items-center justify-center">
-      {error && <p>Something went wrong!</p>}
-      <h1>Poop tracker 💩💩💩</h1>
+      {error && <p>{error}</p>}
       <form>
+        <h1>Poop tracker 💩💩💩</h1>
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
         </h2>
