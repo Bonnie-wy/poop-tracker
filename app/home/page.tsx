@@ -1,7 +1,8 @@
 import AddPoopRecordButton from "./components/AddRecordbutton";
 import getPoopHistory from "@/lib/actions/getPoopHistory";
-import { intlFormat } from "date-fns";
+import { getDayOfYear, intlFormat } from "date-fns";
 import { Models } from "node-appwrite";
+import CalendarView from "./components/CalendarView";
 
 const formattedDate = (date: string) => {
   return intlFormat(date, {
@@ -22,6 +23,20 @@ const Home = async () => {
 
   const dates = Object.keys(filteredDates || {});
 
+  const splitDate = (date: string) => {
+    const splitDate = date.split("/");
+    const day = splitDate[0];
+    const month = splitDate[1];
+    const year = splitDate[2];
+
+    return { day, month, year };
+  };
+
+  const records = dates.map((date) => {
+    const split = splitDate(date);
+    return getDayOfYear(new Date(+split.year, +split.month, +split.day));
+  });
+
   return (
     <>
       <AddPoopRecordButton />
@@ -35,6 +50,8 @@ const Home = async () => {
       ) : (
         <p>There's no record</p>
       )}
+
+      <CalendarView records={records} />
     </>
   );
 };
