@@ -1,35 +1,41 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import AddPoopRecordButton from "./components/AddRecordbutton";
+import getPoopHistory from "@/lib/actions/getPoopHistory";
+import { intlFormat } from "date-fns";
+import { Models } from "node-appwrite";
 
-const greetings = ["done a no.2", "dropped some excess baggages", "pooped"];
+const formattedDate = (date: string) => {
+  return intlFormat(date, {
+    locale: "en-GB",
+  });
+};
 
-const Home = () => {
-  const [currentGreetingIndex, setCurrentGreetingIndex] = useState<number>(0);
+const Home = async () => {
+  const { data } = await getPoopHistory();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (currentGreetingIndex === greetings.length - 1) {
-        setCurrentGreetingIndex(0);
-        return;
-      }
+  const filteredDates = data?.reduce((acc, cur) => {
+    const createdDate = formattedDate(cur.$createdAt);
+    return {
+      ...acc,
+      [createdDate]: [...(acc[createdDate] ?? []), cur],
+    };
+  }, {} as Record<string, Models.Document[]>);
 
-      setCurrentGreetingIndex((prev) => prev + 1);
-    }, 2000);
-
-    return () => clearInterval(intervalId);
-  }, [currentGreetingIndex]);
+  const dates = Object.keys(filteredDates || {});
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-2 row-start-2 items-center">
-        <h1 className="text-2xl">
-          Have you {greetings[currentGreetingIndex]} today...{" "}
-        </h1>
-        <AddPoopRecordButton />
-      </main>
-    </div>
+    <>
+      <AddPoopRecordButton />
+      <h3>💩 Poop history</h3>
+      {filteredDates ? (
+        dates.map((date) => (
+          <p>
+            {date}: {filteredDates[date].length}
+          </p>
+        ))
+      ) : (
+        <p>There's no record</p>
+      )}
+    </>
   );
 };
 
