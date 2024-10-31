@@ -43,7 +43,7 @@ const Home = async () => {
       <h3>💩 Poop history</h3>
       {filteredDates ? (
         dates.map((date) => (
-          <p>
+          <p key={date}>
             {date}: {filteredDates[date].length}
           </p>
         ))
