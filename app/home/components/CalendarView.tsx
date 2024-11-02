@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { addDays, formatISO, getDaysInYear, startOfYear } from "date-fns";
 import CalendarButton from "./CalendarButton";
 import Activities from "./Activities";
@@ -33,7 +34,9 @@ const CalendarView = ({ records }: { records: number[] }) => {
       <div className="flex gap-2">
         <div className="grid grid-rows-7 grid-flow-col gap-1">
           {datesOfWeek.map((date) => (
-            <p className="w-[12px] h-[12px] text-xs">{date.slice(0, 1)}</p>
+            <p key={date} className="w-[12px] h-[12px] text-xs">
+              {date.slice(0, 1)}
+            </p>
           ))}
         </div>
         <div className="grid grid-rows-7 grid-flow-col gap-1 h-fit">
@@ -45,7 +48,9 @@ const CalendarView = ({ records }: { records: number[] }) => {
           })}
         </div>
       </div>
-      <Activities />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Activities />
+      </Suspense>
     </div>
   );
 };

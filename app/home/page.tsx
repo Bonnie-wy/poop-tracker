@@ -41,16 +41,6 @@ const Home = async () => {
     <>
       <AddPoopRecordButton />
       <h3>💩 Poop history</h3>
-      {filteredDates ? (
-        dates.map((date) => (
-          <p key={date}>
-            {date}: {filteredDates[date].length}
-          </p>
-        ))
-      ) : (
-        <p>There's no record</p>
-      )}
-
       <CalendarView records={records} />
     </>
   );
