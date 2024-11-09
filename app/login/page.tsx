@@ -28,7 +28,9 @@ const LoginPage = () => {
     <div className="flex items-center justify-center">
       {error && <p>{error}</p>}
       <form>
-        <h1>Poop tracker 💩💩💩</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Poop tracker 💩💩💩
+        </h1>
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
         </h2>
