@@ -34,7 +34,12 @@ const Home = async () => {
 
   const records = dates.map((date) => {
     const split = splitDate(date);
-    return getDayOfYear(new Date(+split.year, +split.month, +split.day));
+
+    const year = +split.year;
+    const monthIndex = +split.month - 1;
+    const day = +split.day;
+
+    return getDayOfYear(new Date(year, monthIndex, day));
   });
 
   return (
