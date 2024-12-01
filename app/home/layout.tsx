@@ -1,7 +1,7 @@
 "use client";
 
+import LogoutButton from "@/components/LogoutButton";
 import { ReactNode, useEffect, useState } from "react";
-import LogoutButton from "../components/LogoutButton";
 
 const greetings = ["done a no.2", "dropped some excess baggages", "pooped"];
 
