@@ -3,6 +3,7 @@ import getPoopHistory from "@/lib/actions/getPoopHistory";
 import { getDayOfYear, intlFormat } from "date-fns";
 import { Models } from "node-appwrite";
 import CalendarView from "./components/CalendarView";
+import CreateHabitButton from "@/components/CreateHabitButton";
 
 const formattedDate = (date: string) => {
   return intlFormat(date, {
@@ -44,6 +45,7 @@ const Home = async () => {
 
   return (
     <>
+      <CreateHabitButton />
       <AddPoopRecordButton />
       <h3>💩 Poop history</h3>
       <CalendarView records={records} />
