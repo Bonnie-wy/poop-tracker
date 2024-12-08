@@ -1,5 +1,6 @@
 "use client";
 
+import Habits from "@/components/Habits";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import createHabit from "@/lib/actions/createHabit";
@@ -28,10 +29,10 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <h1>Create a new habit</h1>
+    <div className="flex flex-col items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 sm:min-w-48 min-w-20">
+      <h1 className="text-3xl font-semibold">Create a new habit</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-3">
           <Input
             placeholder="Enter a name"
@@ -43,6 +44,7 @@ const Page = () => {
           <Button type="submit" variant="outline">
             Create habit
           </Button>
+          <Habits />
         </div>
       </form>
     </div>
