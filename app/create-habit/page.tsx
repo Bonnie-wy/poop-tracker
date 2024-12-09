@@ -1,6 +1,7 @@
 "use client";
 
-import Habits from "@/components/Habits";
+import Container from "@/components/Container";
+import Habit from "@/components/Habit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import createHabit from "@/lib/actions/createHabit";
@@ -32,20 +33,22 @@ const Page = () => {
     <div className="flex flex-col items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 sm:min-w-48 min-w-20">
       <h1 className="text-3xl font-semibold">Create a new habit</h1>
 
-      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex gap-3">
-          <Input
-            placeholder="Enter a name"
-            id="name"
-            {...register("name", { required: true })}
-          />
-          {errors.name && <span>This field is required</span>}
+      <form className="w-full flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+        <Container>
+          <div className="flex gap-3">
+            <Input
+              placeholder="Enter a name"
+              id="name"
+              {...register("name", { required: true })}
+            />
+            {errors.name && <span>This field is required</span>}
 
-          <Button type="submit" variant="outline">
-            Create habit
-          </Button>
-          <Habits />
-        </div>
+            <Button type="submit" variant="default">
+              Create habit
+            </Button>
+          </div>
+        </Container>
+        <Habit />
       </form>
     </div>
   );
